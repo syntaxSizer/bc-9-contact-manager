@@ -1,4 +1,4 @@
-#This example uses docopt with the built in cmd module to demonstrate an
+# This example uses docopt with the built in cmd module to demonstrate an
 # interactive command application.
 """
 Usage:
@@ -19,11 +19,13 @@ from docopt import docopt, DocoptExit
 from contacts import ContactEntries, ContactSearch
 from sms import SendSms
 
+
 def docopt_cmd(func):
     """
     This decorator is used to simplify the try/except block and pass the result
     of the docopt parsing to the called action.
     """
+
     def fn(self, arg):
         try:
             opt = docopt(fn.__doc__, arg)
@@ -51,28 +53,25 @@ def docopt_cmd(func):
 
 
 class MyInteractive (cmd.Cmd):
-    intro = 'Welcome to my interactive program!' \
+    intro = 'Welcome to the interactive Contact Manager!'\
         + ' (type help for a list of commands.)'
     prompt = '(contact_manager) '
     file = None
 
-
     def add_contact(self, name, number):
-        new_contact = ContactEntries(name,number)
+        new_contact = ContactEntries(name, number)
         new_contact.add_contact()
 
     def search(self, name):
         search_item = ContactSearch(name)
         search_item.search_contact_list()
-        
 
     def sms(self, name, message):
         send_msg = SendSms(name, message)
         send_msg.send_sms()
 
-
     @docopt_cmd
-    def do_add(self,args):
+    def do_add(self, args):
         """Usage: add -n <name> -p <phonenumber>"""
         # print/ args['<name>'], "number is ", args['<phonenumber>']
         self.add_contact(args['<name>'], args['<phonenumber>'])
@@ -82,18 +81,16 @@ class MyInteractive (cmd.Cmd):
         """Usage: search search <name>"""
         self.search(args['<name>'])
 
-
     @docopt_cmd
     def do_text(self, args):
         """Usage: text <name> -m <message>..."""
 
-        self.sms(args['<name>'],(" ".join(args['<message>'])))
-
+        self.sms(args['<name>'], (" ".join(args['<message>'])))
 
     def do_quit(self, args):
         """Quits out of Interactive Mode."""
 
-        print('Awesome saving contacts')
+        print(' saving contacts')
         exit()
 
 opt = docopt(__doc__, sys.argv[1:])

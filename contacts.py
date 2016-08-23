@@ -9,13 +9,11 @@ class ContactEntries:
         self.my_number = my_number
 
     def add_contact(self):
-        """
-        save the contact in a dict with the phone number as a key
-        """
-        contact_dict = {}
-        contact_dect[self.my_number] = self.name
-        db_connect = Database()
-        db_connect.add_contact(self.name, self.my_number)
+        contact_list = {}
+        contact_list[self.my_number] = self.name
+        connect_db = Database()
+        connect_db.add_contact(self.name, self.my_number)
+
 
 
 class ContactSearch:
@@ -35,7 +33,7 @@ class ContactSearch:
         for items, values in result:
             # print str(i[1]), i[2]
             if self.name == values and self.name > 1:
-                print "which %s ?" % self.name, values
+                print "which '%s' ?" % self.name, values
             print values
         return result
 

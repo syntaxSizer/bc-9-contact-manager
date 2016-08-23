@@ -1,5 +1,4 @@
 import sqlite3
-from datetime import datetime
 
 
 class Database:
@@ -7,12 +6,15 @@ class Database:
         self.con = sqlite3.connect('contacts.db')
         self.cursor = self.con.cursor()
         self.cursor.execute(
-            "CREATE TABLE IF NOT EXISTS Contacts_Book(id INTEGER PRIMARY KEY AUTOINCREMENT, created_at TIMESTAMP, contact_name TEXT, conatct_number TEXT UNIQUE)")
+            "CREATE TABLE IF NOT EXISTS Contacts_Book(id INTEGER PRIMARY KEY AUTOINCREMENT, contact_name TEXT, conatct_number TEXT UNIQUE)")
 
-    def add_contact(self, contact_name, contact_number):
+    def add_contact(self, name, my_number):
+        '''
+        call number function
+        '''
         with self.con:
-            self.cursor.execute("INSERT INTO Contacts_book (created_at , contact_name , contact_number) VALUES('%s' '%s '%s')".format(
-                datetime.now(), contact_name, contact_number))
+        #commmits and closes connecction
+            self.con.execute("INSERT INTO contact_list(NAME ,PHONENUMBER) VALUES('{}', '{}')" .format(name, my_number))
 
     def search_by_name(self, arg):
         """

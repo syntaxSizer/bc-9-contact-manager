@@ -10,7 +10,7 @@ class Database:
             "CREATE TABLE IF NOT EXISTS contact_list(ID INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT ,PHONENUMBER TEXT UNIQUE )")
         # print "Name and Number stored"
 
-    def add_contat(self, name, my_number):
+    def add_contact(self, name, my_number):
         '''
         call number function
         '''

@@ -52,7 +52,7 @@ def docopt_cmd(func):
     return fn
 
 
-class MyInteractive (cmd.Cmd):
+class Interactive (cmd.Cmd):
     intro = 'Welcome to the interactive Contact Manager!'\
         + ' (type help for a list of commands.)'
     prompt = '(contact_manager) '
@@ -96,6 +96,6 @@ class MyInteractive (cmd.Cmd):
 opt = docopt(__doc__, sys.argv[1:])
 
 if opt['--interactive']:
-    MyInteractive().cmdloop()
+    Interactive().cmdloop()
 
 print(opt)

@@ -3,33 +3,31 @@ import sqlite3
 
 class Database:
     def __init__(self):
-        self.con = sqlite3.connect('contacts.db')
-        self.cursor = self.con.cursor()
-        self.cursor.execute(
-            "CREATE TABLE IF NOT EXISTS Contacts_Book(id INTEGER PRIMARY KEY AUTOINCREMENT, contact_name TEXT, conatct_number TEXT UNIQUE)")
+        self.contacts = sqlite3.connect("ContactStorage.db")
+        self.cursor = self.contacts.cursor()
 
-    def add_contact(self, name, my_number):
+        self.contacts.execute(
+            "CREATE TABLE IF NOT EXISTS contact_list(ID INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT ,PHONENUMBER TEXT UNIQUE )")
+        # print "Name and Number stored"
+
+    def add_contat(self, name, my_number):
         '''
         call number function
         '''
-        with self.con:
-        #commmits and closes connecction
-            self.con.execute("INSERT INTO contact_list(NAME ,PHONENUMBER) VALUES('{}', '{}')" .format(name, my_number))
+        with self.contacts:
+            # commmits and closes connecction
+            self.contacts.execute(
+                "INSERT INTO contact_list(NAME ,PHONENUMBER) VALUES('{}', '{}')" .format(name, my_number))
 
-    def search_by_name(self, arg):
-        """
-        Searches for contact based on name
-        """
-        res = self.cursor.execute(
-            "SELECT * FROM Contacts_book WHERE contact_name LIKE '%{}%' ORDER BY id ".format(
-                arg))
-        search_result = [i for i in res]
-        res.close()
-        return search_result
+    def contact_search(self, name):
+        query = self.contacts.execute(
+            "SELECT * from contact_list WHERE NAME LIKE '%{}%'".format(name))
+        # # print query
+        result = [i for i in query]
+        query.close()
+        return result
+        # return query
 
-    def search_by_id(self, my_id):
-        """
-        search for contact based on id
-        """
-        search_by_id = self.con.execute(
-            "SELECT * FROM Contacts_book WHERE id LIKE '{}'".format(my_id))
+    def select_search(self, my_id):
+        by_id = self.contacts.execute(
+            "SELECT * from contact_list WHERE ID LIKE  '{}'".format(my_id))

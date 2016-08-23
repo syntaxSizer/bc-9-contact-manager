@@ -4,23 +4,28 @@ from database import Database
 class ContactEntries:
     """save contacts in the db"""
 
-    def __init__(self, name, my_number):
+     def __init__(self, name, my_number):
         self.name = name
         self.my_number = my_number
 
     def add_contact(self):
+
         contact_list = {}
+        # name = raw_input("Enter your name ")
+        # my_number = input("Enter your Phone number ")
+
         contact_list[self.my_number] = self.name
+
         connect_db = Database()
-        connect_db.add_contact(self.name, self.my_number)
+        connect_db.contact_add(self.name, self.my_number)
+
 
 
 
 class ContactSearch:
 
-    def __init__(self, name, my_number):
+    def __init__(self, name):
         self.name = name
-        self.my_number = my_number
 
     def search_contact_list(self):
         """
@@ -29,12 +34,12 @@ class ContactSearch:
         """
 
         search_db = Database()
-        result = search_db.search_by_name(self.name)
-        for items, values in result:
-            # print str(i[1]), i[2]
-            if self.name == values and self.name > 1:
-                print "which '%s' ?" % self.name, values
-            print values
+        result = search_db.contact_search(self.name)
+        for items in result:
+            print str(i[1]), i[2]
+            # if self.name == values and self.name > 1:
+            #     print "which %s ?" % self.name, values
+            # print values
         return result
 
     # def search_by_number(self):

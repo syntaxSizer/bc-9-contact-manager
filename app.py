@@ -19,7 +19,6 @@ from docopt import docopt, DocoptExit
 from contacts import ContactEntries, ContactSearch
 
 
-
 def docopt_cmd(func):
     """
     This decorator is used to simplify the try/except block and pass the result
@@ -55,9 +54,8 @@ def docopt_cmd(func):
 class Interactive (cmd.Cmd):
     intro = 'Welcome to the interactive contact manager!' \
         + ' (type help for a list of commands.)'
-    prompt = '(contact_manager) '
+    prompt = 'contact_manager<<>>'
     file = None
-
 
     def add_contact(self, name, number):
         new_contact = ContactEntries(name, number)

@@ -14,9 +14,9 @@ class SendTesxt:
         def send_sms(self):
             name = self.to
             to_who = ContactSearch(name)
-            Contact = to_who.search_contact_list()
+            contact = to_who.search_contact_list()
 
             if (len(Contact) > 0):
                 send_to = AfricasTalkingGateway(
                     SendTesxt.USERNAME, SendTesxt.APIKEY)
-                send_to.sendMessage(contact[0][2], self.message)
+                send_to.sendMessage(contact[0][2], self.msg)

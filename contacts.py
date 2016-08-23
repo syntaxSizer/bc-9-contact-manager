@@ -1,7 +1,6 @@
 from database import Database
 
 
-
 class ContactEntries:
     """save contacts in the db"""
 
@@ -42,7 +41,7 @@ class ContactSearch:
 
     # def search_by_number(self):
     #     """
-    #     search in the db by contact 
+    #     search in the db by contact
     #     number using  db class instance
     #     """
     #     search_db = Database()

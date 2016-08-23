@@ -90,7 +90,7 @@ class Interactive (cmd.Cmd):
     def do_quit(self, args):
         """Quits out of Interactive Mode."""
 
-        print(' saving contacts')
+        print('Bye O.o')
         exit()
 
 opt = docopt(__doc__, sys.argv[1:])

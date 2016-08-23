@@ -2,7 +2,7 @@
 # interactive command application.
 """
 Usage:
-    contact_manager -n <name>  -p <phonenumber> [--timeout=<seconds>]
+    Contact_manager -n <name>  -p <phonenumber> [--timeout=<seconds>]
     contact_manager search <name> [--timeout=<seconds>]
     contact_manager text <name> -m <message> [--timeout=<seconds>]
     contact_manager serial <port> [--baud=<n>] [--timeout=<seconds>]
@@ -16,6 +16,8 @@ Options:
 import sys
 import cmd
 from docopt import docopt, DocoptExit
+from contacts import ContactEntries, ContactSearch
+
 
 
 def docopt_cmd(func):
@@ -32,7 +34,7 @@ def docopt_cmd(func):
             # The DocoptExit is thrown when the args do not match.
             # We print a message to the user and the usage block.
 
-            print("invalid command!")
+            print("you typed invalid command!")
             print(e)
             return
 
@@ -50,11 +52,12 @@ def docopt_cmd(func):
     return fn
 
 
-class MyInteractive (cmd.Cmd):
-    intro = 'Welcome to my interactive program!' \
+class Interactive (cmd.Cmd):
+    intro = 'Welcome to the interactive contact manager!' \
         + ' (type help for a list of commands.)'
     prompt = '(contact_manager) '
     file = None
+
 
     def add_contact(self, name, number):
         new_contact = ContactEntries(name, number)
@@ -64,9 +67,10 @@ class MyInteractive (cmd.Cmd):
         search_item = ContactSearch(name)
         search_item.search_contact_list()
 
-    def sms(self, name, message):
-        send_msg = SendSms(name, message)
-        send_msg.send_sms()
+    # waiting for api integration
+    # def sms(self, name, message):
+    #     send_msg = SendSms(name, message)
+    #     send_msg.send_sms()
 
     @docopt_cmd
     def do_add(self, args):
@@ -88,12 +92,12 @@ class MyInteractive (cmd.Cmd):
     def do_quit(self, args):
         """Quits out of Interactive Mode."""
 
-        print('Awesome saving contacts')
+        print('saving contacts ...')
         exit()
 
 opt = docopt(__doc__, sys.argv[1:])
 
 if opt['--interactive']:
-    MyInteractive().cmdloop()
+    Interactive().cmdloop()
 
 print(opt)

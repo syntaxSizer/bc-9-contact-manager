@@ -33,7 +33,7 @@ def docopt_cmd(func):
             # The DocoptExit is thrown when the args do not match.
             # We print a message to the user and the usage block.
 
-            print("Request not delivered try again!")
+            print("invalid command!")
             print(e)
             return
 
@@ -49,3 +49,22 @@ def docopt_cmd(func):
     fn.__doc__ = func.__doc__
     fn.__dict__.update(func.__dict__)
     return fn
+
+class MyInteractive (cmd.Cmd):
+    intro = 'Welcome to my interactive program!' \
+        + ' (type help for a list of commands.)'
+    prompt = '(contact_manager) '
+    file = None
+
+       def add_contact(self, name, number):
+        new_contact = ContactEntry(name,number)
+        new_contact.add_contact()
+
+    def search(self, name):
+        search_item = ContactSearch(name)
+        search_item.search_contact_list()
+        
+
+    def sms(self, name, message):
+        send_msg = SendSms(name, message)
+        send_msg.send_sms()

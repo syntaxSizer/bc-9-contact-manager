@@ -1,30 +1,29 @@
-# This example uses docopt with the built in cmd module to demonstrate an
+#This example uses docopt with the built in cmd module to demonstrate an
 # interactive command application.
 """
 Usage:
-    Contact_manager -n <name>  -p <phonenumber> [--timeout=<seconds>]
-    contact_manager search <name> [--timeout=<seconds>]
-    contact_manager text <name> -m <message> [--timeout=<seconds>]
-    contact_manager serial <port> [--baud=<n>] [--timeout=<seconds>]
+    contact_manager -n <name> -p <phonenumber>    add new contact
+    contact_manager search <name>                 search for a contact
+    contact_manager send <name> -m <message>      send SMS
     contact_manager (-i | --interactive)
     contact_manager (-h | --help | --version)
 Options:
-    -i, --interactive        Interactive Mode
-    -h, --help               Show this screen and exit.
+    -i, --interactive                             Interactive Mode
+    -h, --help                                    Show this screen and exit.
+    
 """
 
 import sys
 import cmd
 from docopt import docopt, DocoptExit
 from contacts import ContactEntries, ContactSearch
-
+from sms import SendSms
 
 def docopt_cmd(func):
     """
     This decorator is used to simplify the try/except block and pass the result
     of the docopt parsing to the called action.
     """
-
     def fn(self, arg):
         try:
             opt = docopt(fn.__doc__, arg)
@@ -33,7 +32,7 @@ def docopt_cmd(func):
             # The DocoptExit is thrown when the args do not match.
             # We print a message to the user and the usage block.
 
-            print("you typed invalid command!")
+            print("invalid command! try again")
             print(e)
             return
 
@@ -51,27 +50,29 @@ def docopt_cmd(func):
     return fn
 
 
-class Interactive (cmd.Cmd):
-    intro = 'Welcome to the interactive contact manager!' \
+class MyInteractive (cmd.Cmd):
+    intro = 'Welcome to my interactive program!' \
         + ' (type help for a list of commands.)'
-    prompt = 'contact_manager<<>>'
+    prompt = '(contact_manager) '
     file = None
 
+
     def add_contact(self, name, number):
-        new_contact = ContactEntries(name, number)
+        new_contact = ContactEntries(name,number)
         new_contact.add_contact()
 
     def search(self, name):
         search_item = ContactSearch(name)
         search_item.search_contact_list()
+        
 
-    # waiting for api integration
     def sms(self, name, message):
         send_msg = SendSms(name, message)
         send_msg.send_sms()
 
+
     @docopt_cmd
-    def do_add(self, args):
+    def do_add(self,args):
         """Usage: add -n <name> -p <phonenumber>"""
         # print/ args['<name>'], "number is ", args['<phonenumber>']
         self.add_contact(args['<name>'], args['<phonenumber>'])
@@ -81,21 +82,23 @@ class Interactive (cmd.Cmd):
         """Usage: search search <name>"""
         self.search(args['<name>'])
 
+
     @docopt_cmd
     def do_text(self, args):
         """Usage: text <name> -m <message>..."""
 
-        self.sms(args['<name>'], (" ".join(args['<message>'])))
+        self.sms(args['<name>'],(" ".join(args['<message>'])))
+
 
     def do_quit(self, args):
         """Quits out of Interactive Mode."""
 
-        print('saving contacts ...')
+        print('Awesome saving contacts')
         exit()
 
 opt = docopt(__doc__, sys.argv[1:])
 
 if opt['--interactive']:
-    Interactive().cmdloop()
+    MyInteractive().cmdloop()
 
 print(opt)

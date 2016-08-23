@@ -68,9 +68,9 @@ class Interactive (cmd.Cmd):
         search_item.search_contact_list()
 
     # waiting for api integration
-    # def sms(self, name, message):
-    #     send_msg = SendSms(name, message)
-    #     send_msg.send_sms()
+    def sms(self, name, message):
+        send_msg = SendSms(name, message)
+        send_msg.send_sms()
 
     @docopt_cmd
     def do_add(self, args):

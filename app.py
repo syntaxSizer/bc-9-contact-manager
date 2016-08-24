@@ -60,8 +60,8 @@ class Interactive (cmd.Cmd):
     # print Fore.RED+f.renderText('contact Manager')
 
     intro = Back.WHITE + Fore.RED + \
-        f.renderText('Welcome to the interactive Contact Manager!')
-    print' (type help for a list of commands.)'
+        f.renderText('Welcome to Consolia Contact Manager!')
+    print'(type help for a list of commands.)'
     prompt = 'contact_manager>>> '
     file = None
 
@@ -76,6 +76,7 @@ class Interactive (cmd.Cmd):
     def sms(self, name, message):
         send_msg = SendSms(name, message)
         send_msg.send_sms()
+        # print 'SMS sent successfully'
 
     @docopt_cmd
     def do_add(self, args):

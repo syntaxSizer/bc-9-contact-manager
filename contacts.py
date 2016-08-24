@@ -41,9 +41,7 @@ class ContactSearch:
             print ' Which  contact ??'
         for items in result:
             if items[2] > 1:
-                print ' %s  %s ' % (items[1], [items[0]])
-            # elif items[0] not in result:
-            #     print 'no such contact! %s' % items[1]
+                print ' %s  %s %s' % ([items[0]], items[1], items[2])
             else:
                 print str(items[1]), items[2]
 

@@ -12,13 +12,14 @@ class SendSms:
         self.message = message
 
     def send_sms(self):
+        """
+        this method sends the sms 
+        """
         name = self.to
         who_to_send = ContactSearch(name)
         contact = who_to_send.search_contact_list()
 
-        # who_to_send.search_contact_list()
-
-        #
+        # this line here to verify that the user put an actual contact >0
         if (len(contact) > 0):
             tosend = AfricasTalkingGateway(SendSms.USERNAME, SendSms.APIKEY)
             tosend.sendMessage(contact[0][2], self.message)

@@ -4,7 +4,7 @@
 Usage:
     contact_manager -n <name> -p <phonenumber>    add new contact
     contact_manager search <name>                 search for a contact
-    contact_manager send <name> -m <message>      send SMS
+    contact_manager text <name> -m <message>      send SMS
     contact_manager (-i | --interactive)
     contact_manager (-h | --help | --version)
 Options:
@@ -18,6 +18,8 @@ import cmd
 from docopt import docopt, DocoptExit
 from contacts import ContactEntries, ContactSearch
 from sms import SendSms
+from colorama import Fore, Back, Style
+
 
 
 def docopt_cmd(func):
@@ -53,9 +55,9 @@ def docopt_cmd(func):
 
 
 class Interactive (cmd.Cmd):
-    intro = 'Welcome to the interactive Contact Manager!'\
+    intro = Back.YELLOW+ Fore.BLACK +'Welcome to the interactive Contact Manager!'\
         + ' (type help for a list of commands.)'
-    prompt = '(contact_manager) '
+    prompt = 'contact_manager>>> '
     file = None
 
     def add_contact(self, name, number):
@@ -83,14 +85,14 @@ class Interactive (cmd.Cmd):
 
     @docopt_cmd
     def do_text(self, args):
-        """Usage: text <name> -m <message>..."""
+        """Usage: send <name> -m <message>..."""
 
         self.sms(args['<name>'], (" ".join(args['<message>'])))
 
     def do_quit(self, args):
         """Quits out of Interactive Mode."""
 
-        print('Bye O.o')
+        print(Fore.BLUE+'~~~~~~~ Bye O.o ~~~~~~~~~')
         exit()
 
 opt = docopt(__doc__, sys.argv[1:])
@@ -98,4 +100,4 @@ opt = docopt(__doc__, sys.argv[1:])
 if opt['--interactive']:
     Interactive().cmdloop()
 
-print(opt)
+print (opt)

@@ -5,7 +5,6 @@ class Database:
     def __init__(self):
         self.contacts = sqlite3.connect("ContactStorage.db")
         self.cursor = self.contacts.cursor()
-
         self.contacts.execute(
             "CREATE TABLE IF NOT EXISTS contact_list(ID INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT ,PHONENUMBER TEXT UNIQUE )")
         # print "Name and Number stored"
@@ -22,12 +21,8 @@ class Database:
     def contact_search(self, name):
         query = self.contacts.execute(
             "SELECT * from contact_list WHERE NAME LIKE '%{}%'".format(name))
-        # # print query
         result = [i for i in query]
         query.close()
         return result
-        # return query
 
-    def select_search(self, my_id):
-        by_id = self.contacts.execute(
-            "SELECT * from contact_list WHERE ID LIKE  '{}'".format(my_id))
+    

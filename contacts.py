@@ -35,9 +35,8 @@ class ContactSearch:
         result = search_db.contact_search(self.name)
         for items in result:
             if items[2]>1:
-                print ' Which ??? %s' % items[1]
+                # print ' Which ??? %s' % items[1]
                 print ' %s  %s ' % (items[1],[items[0]])
-
             else:    
                 print str(items[1]), items[2]
             # if self.name == values and self.name > 1:

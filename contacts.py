@@ -1,4 +1,6 @@
 from database import Database
+from colorama import Fore, Back, Style
+
 
 
 class ContactEntries:
@@ -9,15 +11,15 @@ class ContactEntries:
         self.my_number = my_number
 
     def add_contact(self):
+        try:
 
-        contact_list = {}
-        # name = raw_input("Enter your name ")
-        # my_number = input("Enter your Phone number ")
-
-        contact_list[self.my_number] = self.name
-
-        connect_db = Database()
-        connect_db.add_contact(self.name, self.my_number)
+            contact_list = {}
+            contact_list[self.my_number] = self.name
+            connect_db = Database()
+            connect_db.add_contact(self.name, self.my_number)
+            print 'contact saved succesfully'
+        except:
+            print Fore.MAGENTA+'  the contact already exist '
 
 
 class ContactSearch:
@@ -33,25 +35,17 @@ class ContactSearch:
 
         search_db = Database()
         result = search_db.contact_search(self.name)
+        if not result:
+            print Fore.RED+' No such contact'
+            return None
+        if result > 1:
+            print '  Which  contact ??'
         for items in result:
-            if items[2]>1:
-                # print ' Which ??? %s' % items[1]
-                print ' %s  %s ' % (items[1],[items[0]])
-            else:    
+            if items[2] > 1:
+                print ' %s  %s ' % (items[1], [items[0]])
+            # elif items[0] not in result:
+            #     print 'no such contact! %s' % items[1]
+            else:
                 print str(items[1]), items[2]
-            # if self.name == values and self.name > 1:
-            #     print "which %s ?" % self.name, values
-            # print values
-        return result
 
-    # def search_by_number(self):
-    #     """
-    #     search in the db by contact
-    #     number using  db class instance
-    #     """
-    #     search_db = Database()
-    #     result = search_db.search_by_id(self.my_number)
-    #     for items, values in result:
-    #         # print str(i[1]), i[2]
-    #         print items, values
-    #     return result
+        return result

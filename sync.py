@@ -3,7 +3,7 @@ from model import Firebase, Base
 import click
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy.sql import select
+# from sqlalchemy.sql import select
 from colorama import Fore, Back, Style
 
 
@@ -21,12 +21,13 @@ session = DBSession()
 class Cloude:
     '''
     this class will facilitate uploading
-    and retriving the data from tghe cloude 
+    and retriving the data from the cloude 
     '''
-    def upload_firebase():
-    	# dict to store the data 
+
+    def upload_firebase(self):
+        # dict to store the data
         data_row = {}
-        #list for the primary key
+        # list for the primary key
         data = []
         # my db data
         conta = session.query(Firebase).all()
@@ -44,3 +45,12 @@ class Cloude:
             exit()
         else:
             print 'try again'
+
+    def download_firebase(self):
+        name = click.prompt(click.style(
+            'Please enter username?', fg='cyan', bold=True))
+        jsonData = firebase.get('/contacts_data', name)
+        for x in jsonData:
+            data = Firebase(data=x)
+            session.add(data)
+            session.commit()

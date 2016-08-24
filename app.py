@@ -19,7 +19,7 @@ from docopt import docopt, DocoptExit
 from contacts import ContactEntries, ContactSearch
 from sms import SendSms
 from colorama import Fore, Back, Style
-
+from pyfiglet import Figlet
 
 
 def docopt_cmd(func):
@@ -55,8 +55,13 @@ def docopt_cmd(func):
 
 
 class Interactive (cmd.Cmd):
-    intro = Back.YELLOW+ Fore.BLACK +'Welcome to the interactive Contact Manager!'\
-        + ' (type help for a list of commands.)'
+
+    f = Figlet(font='slant')
+    # print Fore.RED+f.renderText('contact Manager')
+
+    intro = Back.WHITE + Fore.RED + \
+        f.renderText('Welcome to the interactive Contact Manager!')
+    print' (type help for a list of commands.)'
     prompt = 'contact_manager>>> '
     file = None
 
@@ -92,7 +97,7 @@ class Interactive (cmd.Cmd):
     def do_quit(self, args):
         """Quits out of Interactive Mode."""
 
-        print(Fore.BLUE+'~~~~~~~ Bye O.o ~~~~~~~~~')
+        print(Fore.BLUE + Interactive.f.renderText(' Bye O.o '))
         exit()
 
 opt = docopt(__doc__, sys.argv[1:])

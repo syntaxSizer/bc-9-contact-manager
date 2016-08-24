@@ -2,7 +2,6 @@ from database import Database
 from colorama import Fore, Back, Style
 
 
-
 class ContactEntries:
     """save contacts in the db"""
 
@@ -19,7 +18,7 @@ class ContactEntries:
             connect_db.add_contact(self.name, self.my_number)
             print 'contact saved succesfully'
         except:
-            print Fore.MAGENTA+'  the contact already exist '
+            print Fore.MAGENTA + '  the contact already exist '
 
 
 class ContactSearch:
@@ -36,10 +35,10 @@ class ContactSearch:
         search_db = Database()
         result = search_db.contact_search(self.name)
         if not result:
-            print Fore.RED+' No such contact'
+            print Fore.RED + ' No such contact'
             return None
         if result > 1:
-            print '  Which  contact ??'
+            print ' Which  contact ??'
         for items in result:
             if items[2] > 1:
                 print ' %s  %s ' % (items[1], [items[0]])

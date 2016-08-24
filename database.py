@@ -24,5 +24,3 @@ class Database:
         result = [i for i in query]
         query.close()
         return result
-
-    

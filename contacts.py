@@ -35,7 +35,7 @@ class ContactSearch:
         search_db = Database()
         result = search_db.contact_search(self.name)
         if not result:
-            print Fore.RED + ' No such contact'
+            print Fore.Back + ' No such contact'
             return None
         if result > 1:
             print ' Which  contact ??'

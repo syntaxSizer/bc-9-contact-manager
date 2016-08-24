@@ -76,7 +76,7 @@ class Interactive (cmd.Cmd):
     def sms(self, name, message):
         send_msg = SendSms(name, message)
         send_msg.send_sms()
-        # print 'SMS sent successfully'
+        print 'SMS sent successfully'
 
     @docopt_cmd
     def do_add(self, args):

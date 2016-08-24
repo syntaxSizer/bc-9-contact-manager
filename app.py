@@ -2,7 +2,7 @@
 # interactive command application.
 """
 Usage:
-    contact_manager -n <name> -p <phonenumber>    add new contact
+    contact_manager add -n <name> -p <phonenumber>    add new contact
     contact_manager search <name>                 search for a contact
     contact_manager text <name> -m <message>      send SMS
     contact_manager (-i | --interactive)
@@ -76,7 +76,7 @@ class Interactive (cmd.Cmd):
     def sms(self, name, message):
         send_msg = SendSms(name, message)
         send_msg.send_sms()
-        print 'SMS sent successfully'
+        # print 'SMS sent successfully'
 
     @docopt_cmd
     def do_add(self, args):

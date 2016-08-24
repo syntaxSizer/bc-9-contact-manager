@@ -1,6 +1,6 @@
 #bc-9-Contact Manager
 
-This a CLI or console application that stores contacts information, through this app users are able to store contacts from the commandline. The user able to add new contacts, search for contacts and send an sms message through the commandline interface.
+This is a CLI or console application that stores contacts information, through this app users are able to store contacts from the commandline. The user able to add new contacts, search for contacts and send an sms message through the commandline interface.
 
 Installation
 
@@ -22,6 +22,6 @@ II : Search for a contact
  ```
 III : Send sms
 ```
- text ContactName -m "message"
+ send ContactName -m "message"
  ```
 

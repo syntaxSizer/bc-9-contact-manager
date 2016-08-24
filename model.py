@@ -7,11 +7,12 @@ from sqlalchemy.ext.declarative import declarative_base
 # it link ORM
 Base = declarative_base()
 
+
 class Firebase(Base):
 	__tablename__ = 'contact_list'
 	# Here we define columns for the table contact_list
     # Notice that each column is also a normal Python instance attribute.
-    id = Column(Integer, primary_key = True, autoincrement=True)
+    id = Column(Integer, primary_key = True, autoincrement = True)
     contact_number = column(Integer, unique = True)
     contact_name = Column(String(250), nullable = False)
 

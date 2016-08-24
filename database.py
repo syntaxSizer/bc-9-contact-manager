@@ -23,4 +23,4 @@ class Database:
             "SELECT * from contact_list WHERE NAME LIKE '%{}%'".format(name))
         result = [i for i in query]
         query.close()
-        return result
+        return result   

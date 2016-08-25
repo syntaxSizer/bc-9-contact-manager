@@ -27,7 +27,6 @@ from model import Firebase, Base
 from prettytable import PrettyTable
 
 
-
 from sqlalchemy import exc
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
@@ -79,7 +78,7 @@ class Interactive (cmd.Cmd):
     f = Figlet(font='slant')
     # print Fore.RED+f.renderText('contact Manager')
 
-    intro = Back.BLACK + Fore.RED + \
+    intro = Back.BLACK + Fore.YELLOW + \
         f.renderText('Welcome to Consolia Contact Manager!')
     print'(type help for a list of commands.)'
     prompt = Fore.RED + 'contact_manager>>> '
@@ -99,31 +98,27 @@ class Interactive (cmd.Cmd):
         new_contact = Firebase(NAME=cat, PHONENUMBER=dog)
         session.add(new_contact)
         session.commit()
-        click.secho(' {} Successfully added to contacts'.format(
-            cat), fg='cyan', bold=True)
-        for i in session.query(Firebase).order_by(Firebase.id):
-            print(i.name, i.name)
+        click.secho(' {} {} Successfully added to contacts'.format(
+            cat , dog), fg='cyan', bold=True)
+        # for i in session.query(Firebase).order_by(Firebase.id):
+        #     print(i.NAME)
 
     # def list_all(self):
     #     for i in session.query(Firebase).order_by(Firebase.id):
     #         print(str(i.NAME) , str(i.PHONENUMBER))
 
     def search(self, name):
-
-        var = session.query(Firebase).filter(Firebase.NAME==name).first()
+        duplicated = {}
+        var = session.query(Firebase).filter(Firebase.NAME == name).first()
         if var:
-           print ' Name:{}\n Phone number:{} '.format(var.NAME, var.PHONENUMBER)   
+            print ' Name:{}\n Phone number:{} '.format(var.NAME, var.PHONENUMBER)
+        elif var >1:
+            duplicated[var.PHONENUMBER] = var.NAME
+            print duplicated
+
+
         else:
-            print ' no match found for %s'% name                                                                             
-
-
-
-
-
-
-
-
-
+            print ' no match found for %s' % name
 
 
     def sms(self, name, message):
@@ -147,11 +142,10 @@ class Interactive (cmd.Cmd):
         """Usage: send <name> -m <message>..."""
         self.sms(args['<name>'], (" ".join(args['<message>'])))
 
-    def do_list_all(self,args):
+    def do_list_all(self, args):
         """List all the contacts """
         for i in session.query(Firebase).order_by(Firebase.id):
-            print(str(i.NAME) , str(i.PHONENUMBER))
-            
+            print(str(i.NAME), str(i.PHONENUMBER))
 
     def do_quit(self, args):
         """Quits out of Interactive Mode."""

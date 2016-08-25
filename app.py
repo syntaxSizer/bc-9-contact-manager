@@ -3,23 +3,43 @@
 """
 Usage:
     contact_manager add -n <name> -p <phonenumber>    add new contact
-    contact_manager search <name>                 search for a contact
-    contact_manager text <name> -m <message>      send SMS
+    contact_manager search <name>                     search for a contact
+    contact_manager list_all                          list everything
+    contact_manager text <name> -m <message>          send SMS
     contact_manager (-i | --interactive)
     contact_manager (-h | --help | --version)
 Options:
-    -i, --interactive                             Interactive Mode
-    -h, --help                                    Show this screen and exit.
+    -i, --interactive                                 Interactive Mode
+    -h, --help                                        Show this screen and exit.
     
 """
 
 import sys
+import os
 import cmd
+import click
 from docopt import docopt, DocoptExit
 from contacts import ContactEntries, ContactSearch
 from sms import SendSms
 from colorama import Fore, Back, Style
 from pyfiglet import Figlet
+from model import Firebase, Base
+from prettytable import PrettyTable
+
+
+
+from sqlalchemy import exc
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy.sql import select
+# from sync import Firebase
+
+engine = create_engine('sqlite:///ContactStorage.db')
+Base.metadata.bind = engine
+
+DBSession = sessionmaker(bind=engine)
+session = DBSession()
+x = PrettyTable()
 
 
 def docopt_cmd(func):
@@ -59,19 +79,52 @@ class Interactive (cmd.Cmd):
     f = Figlet(font='slant')
     # print Fore.RED+f.renderText('contact Manager')
 
-    intro = Back.WHITE + Fore.RED + \
+    intro = Back.BLACK + Fore.RED + \
         f.renderText('Welcome to Consolia Contact Manager!')
     print'(type help for a list of commands.)'
-    prompt = 'contact_manager>>> '
+    prompt = Fore.RED + 'contact_manager>>> '
     file = None
 
     def add_contact(self, name, number):
-        new_contact = ContactEntries(name, number)
-        new_contact.add_contact()
+        # new_contact = ContactEntries(name, number)
+        # new_contact.add_contact()
+
+        # orm
+        # os.system('clear')
+        cat = name
+        dog = number
+        # new_contact = Firebase()
+        # new_contact.
+
+        new_contact = Firebase(NAME=cat, PHONENUMBER=dog)
+        session.add(new_contact)
+        session.commit()
+        click.secho(' {} Successfully added to contacts'.format(
+            cat), fg='cyan', bold=True)
+        for i in session.query(Firebase).order_by(Firebase.id):
+            print(i.name, i.name)
+
+    # def list_all(self):
+    #     for i in session.query(Firebase).order_by(Firebase.id):
+    #         print(str(i.NAME) , str(i.PHONENUMBER))
 
     def search(self, name):
-        search_item = ContactSearch(name)
-        search_item.search_contact_list()
+
+        var = session.query(Firebase).filter(Firebase.NAME==name).first()
+        if var:
+           print ' Name:{}\n Phone number:{} '.format(var.NAME, var.PHONENUMBER)   
+        else:
+            print ' no match found for %s'% name                                                                             
+
+
+
+
+
+
+
+
+
+
 
     def sms(self, name, message):
         send_msg = SendSms(name, message)
@@ -92,8 +145,13 @@ class Interactive (cmd.Cmd):
     @docopt_cmd
     def do_text(self, args):
         """Usage: send <name> -m <message>..."""
-
         self.sms(args['<name>'], (" ".join(args['<message>'])))
+
+    def do_list_all(self,args):
+        """List all the contacts """
+        for i in session.query(Firebase).order_by(Firebase.id):
+            print(str(i.NAME) , str(i.PHONENUMBER))
+            
 
     def do_quit(self, args):
         """Quits out of Interactive Mode."""

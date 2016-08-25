@@ -11,7 +11,7 @@ firebase = firebase.FirebaseApplication(
     'https://datasetexample.firebaseio.com/Contact_manager', None)
 
 # from sync import contact_list
-engine = create_engine('sqlite:///ContactStorage_sqlalchemy.db')
+engine = create_engine('sqlite:///ContactStorage.db')
 Base.metadata.bind = engine
 
 DBSession = sessionmaker(bind=engine)

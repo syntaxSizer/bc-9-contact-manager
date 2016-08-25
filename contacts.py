@@ -1,5 +1,19 @@
-from database import Database
+# from database import Database
 from colorama import Fore, Back, Style
+
+# DATABASE
+# from sqlalchemy import exc
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+# from sqlalchemy.sql import select
+from model import Firebase, Base
+# from sync import Firebase
+
+engine = create_engine('sqlite:///ContactStorage_sqlalchemy.db')
+Base.metadata.bind = engine
+ 
+DBSession = sessionmaker(bind=engine)
+session = DBSession()
 
 
 class ContactEntries:
@@ -14,7 +28,7 @@ class ContactEntries:
 
             contact_list = {}
             contact_list[self.my_number] = self.name
-            connect_db = Database()
+            connect_db = Firebase()
             connect_db.add_contact(self.name, self.my_number)
             print 'contact saved succesfully'
         except:
@@ -32,12 +46,12 @@ class ContactSearch:
         name using  db class instance
         """
 
-        search_db = Database()
+        search_db = Firebase()
         result = search_db.contact_search(self.name)
         if not result:
             print Fore.BLACK + ' No such contact'
             return None
-        if  result < 1:
+        if  result <1:
             print ' Which  contact ??'
         for items in result:
             if items[2] > 1:

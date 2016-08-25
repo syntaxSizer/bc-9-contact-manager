@@ -28,6 +28,12 @@ class Database:
         return result
         # return query
 
-    def select_search(self, my_id):
-        by_id = self.contacts.execute(
-            "SELECT * from contact_list WHERE ID LIKE  '{}'".format(my_id))
+    # def select_search(self, my_id):
+    #     by_id = self.contacts.execute(
+    #         "SELECT * from contact_list WHERE PHONENUMBER LIKE  '{}'".format(my_id))
+    def list_all(self):
+        data = self.contacts.execute("SELECT * FROM contact_list")
+        result= [i for i in data]
+        data.close()
+        return result
+

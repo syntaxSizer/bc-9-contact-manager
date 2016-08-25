@@ -25,6 +25,7 @@ class ContactSearch:
     def __init__(self, name):
         self.name = name
 
+   
     def search_contact_list(self):
         """
         search in the db by contact 
@@ -33,26 +34,31 @@ class ContactSearch:
 
         search_db = Database()
         result = search_db.contact_search(self.name)
+        if not result:
+            print ' No such contact'
+            return None
+        if  result <0:
+            print ' Which  contact ??'
         for items in result:
-            if items[2]>1:
-                print ' Which ??? %s' % items[1]
-                print ' %s  %s ' % (items[1],[items[0]])
-
-            else:    
+            if items[2] > 1:
+                print ' %s  %s %s' % ([items[0]], items[1], items[2])
+            else:
                 print str(items[1]), items[2]
-            # if self.name == values and self.name > 1:
-            #     print "which %s ?" % self.name, values
-            # print values
-        return result
 
-    # def search_by_number(self):
-    #     """
-    #     search in the db by contact
-    #     number using  db class instance
-    #     """
-    #     search_db = Database()
-    #     result = search_db.search_by_id(self.my_number)
-    #     for items, values in result:
-    #         # print str(i[1]), i[2]
-    #         print items, values
-    #     return result
+        return result 
+
+    def search_by_number(self):
+        """
+        search in the db by contact
+        number using  db class instance
+        """
+        
+        search_db = Database()
+
+        result = search_db.number_search(self.my_number)
+        if len(result) == 0:
+            print 'no such number found try search by name'
+            return
+        for k, v in result.items():
+            print(k,v)
+        return result

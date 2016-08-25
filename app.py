@@ -5,6 +5,7 @@ Usage:
     contact_manager -n <name> -p <phonenumber>    add new contact
     contact_manager search <name>                 search for a contact
     contact_manager send <name> -m <message>      send SMS
+    contact_manager list_all                      list everything
     contact_manager (-i | --interactive)
     contact_manager (-h | --help | --version)
 Options:
@@ -65,6 +66,7 @@ class Interactive (cmd.Cmd):
     def search(self, name):
         search_item = ContactSearch(name)
         search_item.search_contact_list()
+        
 
     def sms(self, name, message):
         send_msg = SendSms(name, message)
@@ -92,6 +94,9 @@ class Interactive (cmd.Cmd):
 
         print('Bye O.o')
         exit()
+
+    def do_list_all(self):
+        self.list_all()    
 
 opt = docopt(__doc__, sys.argv[1:])
 

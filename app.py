@@ -1,5 +1,3 @@
-# This example uses docopt with the built in cmd module to demonstrate an
-# interactive command application.
 """
 Usage:
     contact_manager -n <name> -p <phonenumber>    add new contact
@@ -18,6 +16,8 @@ import cmd
 from docopt import docopt, DocoptExit
 from contacts import ContactEntries, ContactSearch
 from sms import SendSms
+from pyfiglet import Figlet
+from colorama import Fore, Back, Style
 
 
 def docopt_cmd(func):
@@ -53,14 +53,17 @@ def docopt_cmd(func):
 
 
 class Interactive (cmd.Cmd):
-    intro = 'Welcome to the interactive Contact Manager!'\
-        + ' (type help for a list of commands.)'
-    prompt = '(contact_manager) '
+    f = Figlet(font='slant')
+    intro = Back.BLACK + Fore.YELLOW + \
+        f.renderText('Welcome to Consolia Contact Manager!')
+    print'(type help for a list of commands.)'
+    prompt = Fore.RED + 'contact_manager>>> '
     file = None
 
     def add_contact(self, name, number):
         new_contact = ContactEntries(name, number)
         new_contact.add_contact()
+        print '%s added successfully!' % name
 
     def search(self, name):
         search_item = ContactSearch(name)
@@ -88,10 +91,11 @@ class Interactive (cmd.Cmd):
         self.sms(args['<name>'], (" ".join(args['<message>'])))
 
     def do_quit(self, args):
-        """Quits out of Interactive Mode."""
+        """Quits the Interactive Mode."""
 
-        print('Bye O.o')
+        print(Fore.BLUE + Interactive.f.renderText(' Bye O.o '))
         exit()
+
 
 opt = docopt(__doc__, sys.argv[1:])
 

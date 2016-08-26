@@ -1,5 +1,7 @@
 from AfricasTalkingGateway import AfricasTalkingGateway
 from contacts import ContactSearch
+from colorama import Fore, Back, Style
+
 
 
 class SendSms:
@@ -22,3 +24,4 @@ class SendSms:
         if (len(contact) > 0):
             tosend = AfricasTalkingGateway(SendSms.USERNAME, SendSms.APIKEY)
             tosend.sendMessage(contact[0][2], self.message)
+            print Fore.BLUE+'message sent successfully  '

@@ -3,7 +3,7 @@ Usage:
     contact_manager -n <name> -p <phonenumber>    add new contact
     contact_manager search <name>                 search for a contact
     contact_manager send <name> -m <message>      send SMS
-        contact_manager (-i | --interactive)
+    contact_manager (-i | --interactive)
     contact_manager (-h | --help | --version)
 Options:
     -i, --interactive                             Interactive Mode

@@ -1,6 +1,7 @@
 from colorama import Fore, Back, Style
 from database import Database
 
+
 class ContactEntries:
     """save contacts in the db"""
 
@@ -19,6 +20,7 @@ class ContactEntries:
 
 class ContactSearch:
     counter = 0
+
     def __init__(self, name):
         self.name = name
 
@@ -33,7 +35,7 @@ class ContactSearch:
         if not result:
             print Fore.YELLOW + ' No such contact'
             return None
-        if result > 0:
+        if result > 1:
             print ' Which  contact ??'
         for items in result:
             if items[2] > 1:
@@ -41,20 +43,4 @@ class ContactSearch:
             else:
                 print str(items[1]), items[2]
 
-        return result
-
-    def search_by_number(self):
-        """
-        search in the db by contact
-        number using  db class instance
-        """
-
-        search_db = Database()
-
-        result = search_db.number_search(self.my_number)
-        if len(result) == 0:
-            print 'no such number found try search by name'
-            return
-        for k, v in result.items():
-            print(k, v)
         return result

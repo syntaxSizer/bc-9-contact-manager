@@ -1,6 +1,5 @@
-from database import Database
 from colorama import Fore, Back, Style
-
+from database import Database
 
 class ContactEntries:
     """save contacts in the db"""

@@ -1,0 +1,10 @@
+SQLAlchemy==1.0.12
+argparse==1.2.1
+click==6.6
+colorama==0.3.7
+docopt==0.6.2
+prettytable==0.7.2
+pyfiglet==0.7.5
+python-firebase==1.2
+requests==2.11.1
+wsgiref==0.1.2

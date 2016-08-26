@@ -1,10 +1,10 @@
 #bc-9-Contact Manager
 
-This a CLI or console application that stores users may use to store contacts through commandline. the user able to add new contact, search for contacts and send an sms messeage through the commandline interface
+This is a CLI or console application that stores contacts information, through this app users are able to store contacts from the commandline. The user able to add new contacts, search for contacts and send an sms message through the commandline interface.
 
 Installation
 
-1 : Clone the app from this repository <a href=""/>consolia</a>
+1 : Clone the app from this repository <a href="https://github.com/syntaxSizer/bc-9-contact-manager"/>consolia</a>
 
 2 : Ensure you have a <a href="https://virtualenv.pypa.io/en/stable/">virtual environment</a> to run this app [Optional].
 
@@ -22,6 +22,6 @@ II : Search for a contact
  ```
 III : Send sms
 ```
- text ContactName -m "message"
+ send ContactName -m "message"
  ```
 

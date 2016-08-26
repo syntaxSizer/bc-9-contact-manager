@@ -12,7 +12,7 @@ class Database:
 
     def add_contact(self, name, my_number):
         '''
-        call number function
+        insert the conatact the db
         '''
         with self.contacts:
             # commmits and closes connecction
@@ -20,20 +20,13 @@ class Database:
                 "INSERT INTO contact_list(NAME ,PHONENUMBER) VALUES('{}', '{}')" .format(name, my_number))
 
     def contact_search(self, name):
+        """
+        query all names that equals
+        to the search value 
+        """
         query = self.contacts.execute(
             "SELECT * from contact_list WHERE NAME LIKE '%{}%'".format(name))
-        # # print query
         result = [i for i in query]
         query.close()
         return result
         # return query
-
-    # def select_search(self, my_id):
-    #     by_id = self.contacts.execute(
-    #         "SELECT * from contact_list WHERE PHONENUMBER LIKE  '{}'".format(my_id))
-    def list_all(self):
-        data = self.contacts.execute("SELECT * FROM contact_list")
-        result= [i for i in data]
-        data.close()
-        return result
-

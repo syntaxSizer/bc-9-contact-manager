@@ -1,11 +1,8 @@
-# This example uses docopt with the built in cmd module to demonstrate an
-# interactive command application.
 """
 Usage:
     contact_manager -n <name> -p <phonenumber>    add new contact
     contact_manager search <name>                 search for a contact
     contact_manager send <name> -m <message>      send SMS
-    contact_manager list_all                      list everything
     contact_manager (-i | --interactive)
     contact_manager (-h | --help | --version)
 Options:
@@ -66,12 +63,11 @@ class Interactive (cmd.Cmd):
     def add_contact(self, name, number):
         new_contact = ContactEntries(name, number)
         new_contact.add_contact()
-        print '%s added successfully!' % name 
+        print '%s added successfully!' % name
 
     def search(self, name):
         search_item = ContactSearch(name)
         search_item.search_contact_list()
-        
 
     def sms(self, name, message):
         send_msg = SendSms(name, message)
@@ -100,9 +96,6 @@ class Interactive (cmd.Cmd):
         print(Fore.BLUE + Interactive.f.renderText(' Bye O.o '))
         exit()
 
-    def do_list_all(self):
-        """ lidt all the contacts"""
-        list_all()    
 
 opt = docopt(__doc__, sys.argv[1:])
 
